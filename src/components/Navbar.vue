@@ -48,7 +48,7 @@ export default {
   .search-input {
     width: 100%;
     input::placeholder {
-      color: $bluey-gray;
+      color: $bluey-grey;
     }
   }
 }

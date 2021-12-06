@@ -1,5 +1,15 @@
 <template>
-  <div class="home">Cadastre contatos</div>
+  <div class="home">
+    <ContactTable />
+  </div>
 </template>
 
-<script></script>
+<script>
+import ContactTable from "@/components/ContactTable";
+
+export default {
+  components: {
+    ContactTable,
+  },
+};
+</script>
