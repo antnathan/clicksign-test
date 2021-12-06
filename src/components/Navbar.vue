@@ -38,13 +38,17 @@ export default {
 
 <style lang="scss">
 @import "../styles/_variables.scss";
+@import "../styles/main.scss";
 
 .navbar {
   margin-top: 16px;
 }
 
 .level-right {
-  width: 70%;
+  width: 100%;
+  @include from(768px) {
+    width: 70%;
+  }
   .search-input {
     width: 100%;
     input::placeholder {

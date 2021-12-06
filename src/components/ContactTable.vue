@@ -22,7 +22,12 @@
     <b-table-column header-class="table-header" label="Telefone" v-slot="props">
       {{ props.row.phone }}
     </b-table-column>
-    <b-table-column header-class="table-header" numeric label="">
+    <b-table-column
+      header-class="table-header"
+      :td-attrs="columnTdAttrs"
+      numeric
+      label=""
+    >
       <img src="@/assets/ic-edit.svg" class="ic_edit" />
       <img src="@/assets/ic-delete.svg" class="ic_delete" />
     </b-table-column>
@@ -82,9 +87,16 @@ export default {
       ];
       console.log(letter);
       console.log(alphabet.indexOf(letter));
-      return `background-color: ${
-        colors[alphabet.indexOf(letter) % colors.length]
-      }`;
+      return {
+        "background-color": colors[alphabet.indexOf(letter) % colors.length],
+      };
+    },
+    columnTdAttrs() {
+      return {
+        style: {
+          "justify-content": "center !important",
+        },
+      };
     },
   },
 };
@@ -118,7 +130,7 @@ img.ic_delete {
   font-size: 1em;
   width: 1.5em;
   height: 1.5em;
-  line-height: 1.5em;
+  line-height: 1.3em;
   text-align: center;
   border-radius: 50%;
   color: white;

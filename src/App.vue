@@ -18,4 +18,9 @@ export default {
 
 <style lang="scss">
 @import "./styles/main.scss";
+.container {
+  @include until(768px) {
+    padding: 0 1em;
+  }
+}
 </style>
