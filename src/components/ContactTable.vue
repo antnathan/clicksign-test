@@ -1,48 +1,92 @@
 <template>
-  <b-table class="table is-fullwidth" :data="contacts" narrowed hoverable>
-    <b-table-column
-      header-class="table-header"
-      label=""
-      width="40"
-      v-slot="props"
+  <div class="container">
+    <b-table
+      v-if="hasContacts"
+      class="table is-fullwidth"
+      :data="contacts"
+      narrowed
+      hoverable
     >
-      <div
-        class="letter-icon"
-        :style="backgroundColor(props.row.first_name[0])"
+      <b-table-column
+        header-class="table-header"
+        label=""
+        width="40"
+        v-slot="props"
       >
-        {{ props.row.first_name[0] }}
+        <div
+          class="letter-icon"
+          :style="backgroundColor(props.row.first_name[0])"
+        >
+          {{ props.row.first_name[0] }}
+        </div>
+      </b-table-column>
+      <b-table-column
+        header-class="table-header"
+        label="Contatos"
+        v-slot="props"
+      >
+        {{ props.row.first_name }}
+      </b-table-column>
+      <b-table-column header-class="table-header" label="E-mail" v-slot="props">
+        {{ props.row.email }}
+      </b-table-column>
+      <b-table-column
+        header-class="table-header"
+        label="Telefone"
+        v-slot="props"
+      >
+        {{ props.row.phone }}
+      </b-table-column>
+      <b-table-column
+        header-class="table-header"
+        :td-attrs="columnTdAttrs"
+        numeric
+        label=""
+        v-slot="props"
+      >
+        <img src="@/assets/ic-edit.svg" class="ic_edit" />
+        <img
+          src="@/assets/ic-delete.svg"
+          class="ic_delete"
+          @click="() => removeContact(props.row.id)"
+        />
+      </b-table-column>
+    </b-table>
+    <div v-else class="hero is-medium">
+      <div class="hero-body">
+        <div
+          class="container has-text-centered is-flex is-flex-direction-column is-align-items-center is-justify-content-center"
+        >
+          <img
+            src="@/assets/ic-book.png"
+            srcset="@/assets/ic-book@2x.png 2x, @/assets/ic-book@3x.png 3x"
+            class="ic-book"
+          />
+          <h2 class="subtitle">Nenhum contato foi criado ainda.</h2>
+          <b-button
+            type="is-primary"
+            icon-left="plus"
+            rounded
+            class="create-button"
+            @click="createContact"
+          >
+            Criar contato
+          </b-button>
+        </div>
       </div>
-    </b-table-column>
-    <b-table-column header-class="table-header" label="Contatos" v-slot="props">
-      {{ props.row.first_name }}
-    </b-table-column>
-    <b-table-column header-class="table-header" label="E-mail" v-slot="props">
-      {{ props.row.email }}
-    </b-table-column>
-    <b-table-column header-class="table-header" label="Telefone" v-slot="props">
-      {{ props.row.phone }}
-    </b-table-column>
-    <b-table-column
-      header-class="table-header"
-      :td-attrs="columnTdAttrs"
-      numeric
-      label=""
-      v-slot="props"
-    >
-      <img src="@/assets/ic-edit.svg" class="ic_edit" />
-      <img
-        src="@/assets/ic-delete.svg"
-        class="ic_delete"
-        @click="() => removeContact(props.row.id)"
-      />
-    </b-table-column>
-  </b-table>
+    </div>
+  </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
-  computed: mapState(["contacts"]),
+  computed: {
+    hasContacts() {
+      return this.contacts.length > 0;
+    },
+    ...mapState(["contacts"]),
+  },
   methods: {
     backgroundColor(letter) {
       const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -67,8 +111,15 @@ export default {
         },
       };
     },
+    createContact() {
+      this.$store.commit("push", {
+        id: 5,
+        first_name: "Anne",
+        email: "Lucio_Hettinger@annie.ca",
+        phone: "(254)954-1289",
+      });
+    },
     removeContact(id) {
-      console.log(id);
       this.$store.commit("remove", id);
     },
   },
@@ -80,6 +131,7 @@ export default {
 .table {
   border: 1px solid $pale-grey;
   border-radius: 4px;
+  font-weight: normal;
   /deep/ .table-header {
     font-weight: 500;
     font-size: 13px;
@@ -103,10 +155,25 @@ img.ic_delete {
   font-size: 1em;
   width: 1.5em;
   height: 1.5em;
-  line-height: 1.3em;
+  line-height: 1.5em;
   text-align: center;
   border-radius: 50%;
   color: white;
   text-transform: uppercase;
+}
+
+img.ic-book {
+  width: 237px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.subtitle {
+  margin: 24px 0;
+}
+.create-button {
+  font-weight: $weight-medium;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
 }
 </style>

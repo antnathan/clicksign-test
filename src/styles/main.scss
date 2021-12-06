@@ -1,16 +1,29 @@
 @charset "utf-8";
 @import 'variables';
-@import "~bulma/sass/utilities/_all";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
 
 // Update Bulma's global variables
 $family-sans-serif: "Roboto", sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
-$link: $pink;
 $info: $carrotorange;
 $widescreen-enabled: true;
 $fullhd-enabled: true;
+
+// new colors
+$primary: $light-yellowish-green;
+$primary-invert: $pink;
+// $link-hover: findDarkColor($light-yellowish-green);
+$primary-light: findLightColor($light-yellowish-green);
+$primary-dark: findDarkColor($light-yellowish-green);
+
+$link: $pink;
+$link-invert: findColorInvert($pink);
+$link-light: findLightColor($pink);
+$link-dark: findDarkColor($pink);
 
 // Update some of Bulma's component variables
 $navbar-background-color: $white;
@@ -21,11 +34,11 @@ $input-color: $black;
 // table variables
 $table-background-color: #fff;
 $border: #e1e1e1;
-$table-row-hover-background-color: #fff3f2;
-$table-row-active-color: #fff3f2;
+$table-row-hover-background-color: $very-light-pink;
+$table-row-active-color: $very-light-pink;
 $table-head-cell-color: $bluey-grey;
 
-$weight-light: 400;
+$body-weight: $weight-light;
 
 $navbar-padding-vertical: 2rem;
 $control-border-width: 2px;
@@ -33,5 +46,6 @@ $input-border-color: transparent;
 $input-shadow: none;
 
 // @import "../../node_modules/bulma/bulma.sass";
-@import "~bulma";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/bulma";
 @import "~buefy/src/scss/buefy";
