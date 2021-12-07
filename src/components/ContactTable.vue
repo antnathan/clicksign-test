@@ -53,6 +53,11 @@
           @click="() => openConfirmDelete(props.row.id)"
         />
       </b-table-column>
+      <template #empty>
+        <div class="has-text-centered">
+          Não foi encontrado nenhum contato com essa pesquisa
+        </div>
+      </template>
     </b-table>
     <div v-else class="hero is-medium">
       <div class="hero-body">
