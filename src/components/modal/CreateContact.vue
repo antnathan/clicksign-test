@@ -50,7 +50,7 @@
                 rounded
                 type="is-link"
                 class="save-button"
-                :disabled="!validInput"
+                :disabled="isDisabled"
                 @click="closeSave"
               />
             </footer>
@@ -66,17 +66,21 @@ import { ModalMixin } from "@/mixins/modal";
 export default {
   mixins: [ModalMixin],
   computed: {
+    isDisabled() {
+      return this.isDelete ? false : !this.validInput || !this.validEmail;
+    },
     validInput() {
       return (
         this.contact.name !== "" ||
         this.contact.phone !== "" ||
-        this.validEmail ||
-        this.isDelete
+        this.contact.email !== ""
       );
     },
     validEmail() {
       const [name, domain] = this.contact.email.split("@");
-      return name !== "" && !!domain && domain !== "";
+      return (
+        this.contact.email === "" || (name !== "" && !!domain && domain !== "")
+      );
     },
   },
   methods: {

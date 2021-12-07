@@ -1,11 +1,6 @@
 import { mapState } from "vuex";
 
 export const ModalMixin = {
-  data() {
-    return {
-      id: "",
-    };
-  },
   computed: {
     isModalActive() {
       return this.isCreate || this.isEdit || this.isDelete;
@@ -21,6 +16,7 @@ export const ModalMixin = {
       isCreate: "createModal",
       isEdit: "editModal",
       isDelete: "deleteModal",
+      id: "modalId",
     }),
   },
   methods: {
@@ -39,7 +35,7 @@ export const ModalMixin = {
     },
     openConfirmDelete(id) {
       this.$store.dispatch("openDeleteModal");
-      this.id = id;
+      this.$store.commit("setModalId", id);
     },
     openEditContact(id) {
       this.$store.dispatch("openEditModal");
@@ -47,7 +43,7 @@ export const ModalMixin = {
         (contact) => contact.id === id
       );
       this.$store.commit("setCurrentContact", targetContact);
-      this.id = id;
+      this.$store.commit("setModalId", id);
     },
     closeCreateContact() {
       this.$store.dispatch("closeCreateModal");
@@ -55,12 +51,12 @@ export const ModalMixin = {
     },
     closeEditContact() {
       this.$store.dispatch("closeEditModal");
-      this.id = "";
+      this.$store.commit("setModalId", -1);
       this.cleanContact();
     },
     closeDeleteContact() {
       this.$store.dispatch("closeDeleteModal");
-      this.id = "";
+      this.$store.commit("setModalId", -1);
       this.cleanContact();
     },
     createContact() {

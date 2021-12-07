@@ -3,10 +3,12 @@
     <b-table
       v-if="hasContacts"
       class="table is-fullwidth"
-      :data="contacts"
+      :data="filteredContacts"
       narrowed
       hoverable
       :row-class="(row, index) => row.modifier"
+      filters-event=""
+      :debounce-search="500"
     >
       <b-table-column
         header-class="table-header"
@@ -97,14 +99,31 @@ export default {
     hasContacts() {
       return this.contacts.length > 0;
     },
-    ...mapState(["contacts"]),
+    filteredContacts() {
+      if (this.search === "") return this.contacts;
+      return this.contacts.filter(({ name, email, phone }) => {
+        const lowerName = name.toLowerCase();
+        const lowerEmail = email.toLowerCase();
+        const lowerSearch = this.search.toLowerCase();
+        return (
+          lowerName === lowerSearch ||
+          lowerName.startsWith(lowerSearch) ||
+          lowerEmail === lowerSearch ||
+          lowerEmail.startsWith(lowerSearch) ||
+          phone === lowerSearch ||
+          phone.startsWith(lowerSearch)
+        );
+      });
+    },
+    ...mapState(["contacts", "search"]),
   },
   watch: {
-    contacts(value) {
-      const lastContact = value.find(
-        (contact) => contact.modifier === "highlight"
-      );
+    contacts() {
       setTimeout(() => {
+        const lastContact = this.contacts.find(
+          (contact) => contact.modifier === "highlight"
+        );
+        if (!lastContact) return false;
         lastContact.modifier = "idle";
         this.$store.commit("updateHighlight", {
           modifier: "idle",

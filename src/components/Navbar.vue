@@ -24,6 +24,7 @@
     <div class="level-right">
       <b-field class="search-input">
         <b-input
+          v-model="search"
           placeholder="Buscar..."
           type="search"
           expanded
@@ -46,6 +47,14 @@ export default {
   computed: {
     hasContacts() {
       return this.contacts.length > 0;
+    },
+    search: {
+      get() {
+        return this.$store.state.search;
+      },
+      set(value) {
+        this.$store.commit("setSearch", value);
+      },
     },
     ...mapState(["contacts"]),
   },

@@ -19,6 +19,8 @@ export default new Vuex.Store({
     editModal: false,
     deleteModal: false,
     currentId: -1,
+    modalId: -1,
+    search: "",
   },
   mutations: {
     push(state, contact) {
@@ -34,9 +36,22 @@ export default new Vuex.Store({
       const index = state.contacts.findIndex((contact) => contact.id === id);
       state.contacts.splice(index, 1, contact);
     },
+    updateHighlight(state, { modifier, id }) {
+      const index = state.contacts.findIndex((contact) => contact.id === id);
+      if (index < 0) return false;
+      const updatedContact = state.contacts[index];
+      updatedContact.modifier = modifier;
+      state.contacts.splice(index, 1, updatedContact);
+    },
     remove(state, id) {
       const index = state.contacts.findIndex((contact) => contact.id === id);
       state.contacts.splice(index, 1);
+    },
+    setModalId(state, id) {
+      state.modalId = id;
+    },
+    setSearch(state, searchInput) {
+      state.search = searchInput;
     },
     setCurrentContact(state, contact) {
       state.currentContact = contact;
