@@ -1,28 +1,66 @@
 @charset "utf-8";
-
 @import 'variables';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
 
 // Update Bulma's global variables
 $family-sans-serif: "Roboto", sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
-$link: $pink;
 $info: $carrotorange;
 $widescreen-enabled: true;
 $fullhd-enabled: true;
 
+// new colors
+$primary: $light-yellowish-green;
+$primary-invert: $pink;
+// $link-hover: findDarkColor($light-yellowish-green);
+$primary-light: findLightColor($light-yellowish-green);
+$primary-dark: findDarkColor($light-yellowish-green);
+
+$link: $pink;
+$link-invert: $white;
+$link-light: findLightColor($pink);
+$link-dark: findDarkColor($pink);
+
 // Update some of Bulma's component variables
 $navbar-background-color: $white;
 $body-background-color: $white;
-$input-background-color: $pale-grey;
+$input-background-color: $white-two;
 $input-color: $black;
 
-$weight-light: 400;
+// table variables
+$table-background-color: #fff;
+$border: #e1e1e1;
+$table-row-hover-background-color: $very-light-pink;
+$table-row-active-color: $very-light-pink;
+$table-head-cell-color: $bluey-grey;
+
+// modal variables
+$modal-card-head-background-color: $white-two;
+$modal-card-body-background-color: $white-two;
+
+// button variables
+$button-border-width: 1px;
+$button-border-color: rgba(0, 0, 0, 0.08);
+$button-focus-box-shadow-size: 0 2px 4px 0;
+$button-focus-box-shadow-color: rgba(0, 0, 0, 0.16);
+
+.button-with-shadow {
+  border: $button-border-width solid $button-border-color !important;
+  box-shadow: $button-focus-box-shadow-size $button-focus-box-shadow-color !important;
+}
+
+$body-weight: $weight-light;
 
 $navbar-padding-vertical: 2rem;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-@import "../../node_modules/bulma/bulma.sass";
+// @import "../../node_modules/bulma/bulma.sass";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/bulma";
+@import "~buefy/src/scss/buefy";

@@ -8,11 +8,23 @@
           alt="Logo Ubook: um livro laranja com a letra u seguido do nome Ubook"
         />
       </div>
+      <div v-if="hasContacts" class="level-item">
+        <b-button
+          type="is-primary"
+          icon-left="plus"
+          rounded
+          class="create-button"
+          @click="openCreateContact"
+        >
+          Criar contato
+        </b-button>
+      </div>
     </div>
     <!-- Right side -->
     <div class="level-right">
       <b-field class="search-input">
         <b-input
+          v-model="search"
           placeholder="Buscar..."
           type="search"
           expanded
@@ -27,7 +39,25 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { ModalMixin } from "@/mixins/modal";
+
 export default {
+  mixins: [ModalMixin],
+  computed: {
+    hasContacts() {
+      return this.contacts.length > 0;
+    },
+    search: {
+      get() {
+        return this.$store.state.search;
+      },
+      set(value) {
+        this.$store.commit("setSearch", value);
+      },
+    },
+    ...mapState(["contacts"]),
+  },
   methods: {
     searchIconClick(ev) {
       console.log(ev);
@@ -36,19 +66,39 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "../styles/_variables.scss";
+<style lang="scss" scoped>
+@import "../styles/main.scss";
 
 .navbar {
   margin-top: 16px;
 }
 
+.create-button {
+  @include widescreen {
+    margin-left: 60px;
+  }
+  font-weight: $weight-medium;
+  @extend .button-with-shadow;
+}
+
 .level-right {
-  width: 70%;
+  width: 100%;
+  @include tablet-only {
+    width: 60%;
+  }
+  @include desktop {
+    width: 65%;
+  }
+  @include fullhd {
+    width: 70%;
+  }
   .search-input {
     width: 100%;
-    input::placeholder {
-      color: $bluey-gray;
+    /deep/ input {
+      background-color: $pale-grey;
+      &::placeholder {
+        color: $bluey-grey;
+      }
     }
   }
 }
