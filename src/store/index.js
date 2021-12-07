@@ -23,8 +23,12 @@ export default new Vuex.Store({
   mutations: {
     push(state, contact) {
       state.currentId++;
+      state.contacts.forEach((contact) => {
+        contact.modifier = "idle";
+      });
       const id = state.currentId;
-      state.contacts.push({ ...contact, id });
+      const modifier = "highlight";
+      state.contacts.push({ ...contact, id, modifier });
     },
     update(state, { contact, id }) {
       const index = state.contacts.findIndex((contact) => contact.id === id);

@@ -6,6 +6,7 @@
       :data="contacts"
       narrowed
       hoverable
+      :row-class="(row, index) => row.modifier"
     >
       <b-table-column
         header-class="table-header"
@@ -84,11 +85,33 @@ import { mapState } from "vuex";
 import { ModalMixin } from "@/mixins/modal";
 export default {
   mixins: [ModalMixin],
+  data() {
+    return {
+      contactHighlight: {
+        id: -1,
+        modifier: "idle",
+      },
+    };
+  },
   computed: {
     hasContacts() {
       return this.contacts.length > 0;
     },
     ...mapState(["contacts"]),
+  },
+  watch: {
+    contacts(value) {
+      const lastContact = value.find(
+        (contact) => contact.modifier === "highlight"
+      );
+      setTimeout(() => {
+        lastContact.modifier = "idle";
+        this.$store.commit("updateHighlight", {
+          modifier: "idle",
+          id: lastContact.id,
+        });
+      }, 10000);
+    },
   },
   methods: {
     backgroundColor(letter) {
@@ -104,7 +127,8 @@ export default {
         "#f55a5a",
       ];
       return {
-        "background-color": colors[alphabet.indexOf(letter) % colors.length],
+        "background-color":
+          colors[alphabet.indexOf(letter.toUpperCase()) % colors.length],
       };
     },
     columnTdAttrs() {
@@ -133,10 +157,21 @@ export default {
     padding: 16px 9px 6px;
     border-width: 0 0 1px;
   }
+  /deep/ tr {
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    &.highlight {
+      background-color: #fff3f2;
+    }
+    &.idle {
+      background-color: #ffffff;
+    }
+  }
   /deep/ td {
     vertical-align: middle;
   }
 }
+
 img.ic_edit,
 img.ic_delete {
   width: 16px;
