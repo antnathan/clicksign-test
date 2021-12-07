@@ -35,6 +35,7 @@
                 <b-field label="Telefone">
                   <b-input
                     type="text"
+                    class="phone-input"
                     v-model="contact.phone"
                     @keypress.native="isNumber"
                   >
@@ -130,6 +131,9 @@ export default {
     }
     /deep/ input {
       border: 1px solid #c0c3d2;
+    }
+    /deep/ .phone-input {
+      width: 128px;
     }
   }
 }

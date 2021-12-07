@@ -65,14 +65,22 @@ export default {
 }
 
 .create-button {
-  margin-left: 60px;
+  @include widescreen {
+    margin-left: 60px;
+  }
   font-weight: $weight-medium;
   @extend .button-with-shadow;
 }
 
 .level-right {
   width: 100%;
-  @include from(768px) {
+  @include tablet-only {
+    width: 60%;
+  }
+  @include desktop {
+    width: 65%;
+  }
+  @include fullhd {
     width: 70%;
   }
   .search-input {
