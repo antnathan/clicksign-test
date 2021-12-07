@@ -126,7 +126,9 @@ export default {
 }
 
 .modal-card-body {
-  width: 432px;
+  @include tablet {
+    width: 432px;
+  }
   .field {
     /deep/ .label {
       font-size: 14px;
