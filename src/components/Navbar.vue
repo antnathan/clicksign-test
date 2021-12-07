@@ -29,8 +29,6 @@
           type="search"
           expanded
           icon-right="magnify"
-          icon-right-clickable
-          @icon-right-click="searchIconClick"
         >
         </b-input>
       </b-field>
@@ -57,11 +55,6 @@ export default {
       },
     },
     ...mapState(["contacts"]),
-  },
-  methods: {
-    searchIconClick(ev) {
-      console.log(ev);
-    },
   },
 };
 </script>

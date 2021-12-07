@@ -7,8 +7,6 @@
       narrowed
       hoverable
       :row-class="(row, index) => row.modifier"
-      filters-event=""
-      :debounce-search="500"
     >
       <b-table-column
         header-class="table-header"
