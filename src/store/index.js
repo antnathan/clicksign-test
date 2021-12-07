@@ -9,50 +9,64 @@ Vue.$cookies.config("7d");
 
 export default new Vuex.Store({
   state: {
-    contacts: [
-      {
-        id: 1,
-        first_name: "Leanne",
-        email: "Sincere@april.biz",
-        phone: "1-770-736-8031",
-      },
-      {
-        id: 2,
-        first_name: "John",
-        email: "Shanna@melissa.tv",
-        phone: "010-692-6593",
-      },
-      {
-        id: 3,
-        first_name: "Tina",
-        email: "Nathan@yesenia.net",
-        phone: "1-463-123-4447",
-      },
-      {
-        id: 4,
-        first_name: "Clarence",
-        email: "Julianne.OConner@kory.org",
-        phone: "493-170-9623 x156",
-      },
-      {
-        id: 5,
-        first_name: "Anne",
-        email: "Lucio_Hettinger@annie.ca",
-        phone: "(254)954-1289",
-      },
-    ],
+    contacts: [],
+    currentContact: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+    createModal: false,
+    editModal: false,
+    deleteModal: false,
+    currentId: -1,
   },
   mutations: {
     push(state, contact) {
-      state.contacts.push(contact);
+      state.currentId++;
+      const id = state.currentId;
+      state.contacts.push({ ...contact, id });
+    },
+    update(state, { contact, id }) {
+      const index = state.contacts.findIndex((contact) => contact.id === id);
+      state.contacts.splice(index, 1, contact);
     },
     remove(state, id) {
-      console.log(id);
       const index = state.contacts.findIndex((contact) => contact.id === id);
       state.contacts.splice(index, 1);
     },
+    setCurrentContact(state, contact) {
+      state.currentContact = contact;
+    },
+    toggleCreateContact(state, boolean) {
+      state.createModal = boolean;
+    },
+    toggleEditContact(state, boolean) {
+      state.editModal = boolean;
+    },
+    toggleDeleteContact(state, boolean) {
+      state.deleteModal = boolean;
+    },
   },
-  actions: {},
+  actions: {
+    openCreateModal({ commit }) {
+      commit("toggleCreateContact", true);
+    },
+    closeCreateModal({ commit }) {
+      commit("toggleCreateContact", false);
+    },
+    openEditModal({ commit }) {
+      commit("toggleEditContact", true);
+    },
+    closeEditModal({ commit }) {
+      commit("toggleEditContact", false);
+    },
+    openDeleteModal({ commit }) {
+      commit("toggleDeleteContact", true);
+    },
+    closeDeleteModal({ commit }) {
+      commit("toggleDeleteContact", false);
+    },
+  },
   modules: {},
   plugins: [
     createPersistedState({

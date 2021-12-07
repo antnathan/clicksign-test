@@ -3,15 +3,18 @@
     <div class="container">
       <Navbar />
       <router-view />
+      <CreateContact />
     </div>
   </div>
 </template>
 <script>
 import Navbar from "@/components/Navbar";
+import CreateContact from "@/components/modal/CreateContact";
 
 export default {
   components: {
     Navbar,
+    CreateContact,
   },
 };
 </script>

@@ -21,14 +21,14 @@ $primary-light: findLightColor($light-yellowish-green);
 $primary-dark: findDarkColor($light-yellowish-green);
 
 $link: $pink;
-$link-invert: findColorInvert($pink);
+$link-invert: $white;
 $link-light: findLightColor($pink);
 $link-dark: findDarkColor($pink);
 
 // Update some of Bulma's component variables
 $navbar-background-color: $white;
 $body-background-color: $white;
-$input-background-color: $pale-grey;
+$input-background-color: $white-two;
 $input-color: $black;
 
 // table variables
@@ -37,6 +37,21 @@ $border: #e1e1e1;
 $table-row-hover-background-color: $very-light-pink;
 $table-row-active-color: $very-light-pink;
 $table-head-cell-color: $bluey-grey;
+
+// modal variables
+$modal-card-head-background-color: $white-two;
+$modal-card-body-background-color: $white-two;
+
+// button variables
+$button-border-width: 1px;
+$button-border-color: rgba(0, 0, 0, 0.08);
+$button-focus-box-shadow-size: 0 2px 4px 0;
+$button-focus-box-shadow-color: rgba(0, 0, 0, 0.16);
+
+.button-with-shadow {
+  border: $button-border-width solid $button-border-color !important;
+  box-shadow: $button-focus-box-shadow-size $button-focus-box-shadow-color !important;
+}
 
 $body-weight: $weight-light;
 

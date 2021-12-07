@@ -14,7 +14,7 @@
           icon-left="plus"
           rounded
           class="create-button"
-          @click="createContact"
+          @click="openCreateContact"
         >
           Criar contato
         </b-button>
@@ -39,7 +39,10 @@
 
 <script>
 import { mapState } from "vuex";
+import { ModalMixin } from "@/mixins/modal";
+
 export default {
+  mixins: [ModalMixin],
   computed: {
     hasContacts() {
       return this.contacts.length > 0;
@@ -50,20 +53,11 @@ export default {
     searchIconClick(ev) {
       console.log(ev);
     },
-    createContact() {
-      this.$store.commit("push", {
-        id: 5,
-        first_name: "Anne",
-        email: "Lucio_Hettinger@annie.ca",
-        phone: "(254)954-1289",
-      });
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/_variables.scss";
 @import "../styles/main.scss";
 
 .navbar {
@@ -73,8 +67,7 @@ export default {
 .create-button {
   margin-left: 60px;
   font-weight: $weight-medium;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+  @extend .button-with-shadow;
 }
 
 .level-right {
@@ -84,8 +77,11 @@ export default {
   }
   .search-input {
     width: 100%;
-    input::placeholder {
-      color: $bluey-grey;
+    /deep/ input {
+      background-color: $pale-grey;
+      &::placeholder {
+        color: $bluey-grey;
+      }
     }
   }
 }

@@ -13,11 +13,8 @@
         width="40"
         v-slot="props"
       >
-        <div
-          class="letter-icon"
-          :style="backgroundColor(props.row.first_name[0])"
-        >
-          {{ props.row.first_name[0] }}
+        <div class="letter-icon" :style="backgroundColor(props.row.name[0])">
+          {{ props.row.name[0] }}
         </div>
       </b-table-column>
       <b-table-column
@@ -25,7 +22,7 @@
         label="Contatos"
         v-slot="props"
       >
-        {{ props.row.first_name }}
+        {{ props.row.name }}
       </b-table-column>
       <b-table-column header-class="table-header" label="E-mail" v-slot="props">
         {{ props.row.email }}
@@ -44,11 +41,15 @@
         label=""
         v-slot="props"
       >
-        <img src="@/assets/ic-edit.svg" class="ic_edit" />
+        <img
+          src="@/assets/ic-edit.svg"
+          class="ic_edit"
+          @click="() => openEditContact(props.row.id)"
+        />
         <img
           src="@/assets/ic-delete.svg"
           class="ic_delete"
-          @click="() => removeContact(props.row.id)"
+          @click="() => openConfirmDelete(props.row.id)"
         />
       </b-table-column>
     </b-table>
@@ -68,7 +69,7 @@
             icon-left="plus"
             rounded
             class="create-button"
-            @click="createContact"
+            @click="openCreateContact"
           >
             Criar contato
           </b-button>
@@ -80,7 +81,9 @@
 
 <script>
 import { mapState } from "vuex";
+import { ModalMixin } from "@/mixins/modal";
 export default {
+  mixins: [ModalMixin],
   computed: {
     hasContacts() {
       return this.contacts.length > 0;
@@ -89,7 +92,7 @@ export default {
   },
   methods: {
     backgroundColor(letter) {
-      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-()";
       const colors = [
         "#fa8d68",
         "#90d26c",
@@ -111,14 +114,6 @@ export default {
         },
       };
     },
-    createContact() {
-      this.$store.commit("push", {
-        id: 5,
-        first_name: "Anne",
-        email: "Lucio_Hettinger@annie.ca",
-        phone: "(254)954-1289",
-      });
-    },
     removeContact(id) {
       this.$store.commit("remove", id);
     },
@@ -127,7 +122,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/_variables.scss";
+@import "../styles/main.scss";
 .table {
   border: 1px solid $pale-grey;
   border-radius: 4px;
@@ -137,6 +132,9 @@ export default {
     font-size: 13px;
     padding: 16px 9px 6px;
     border-width: 0 0 1px;
+  }
+  /deep/ td {
+    vertical-align: middle;
   }
 }
 img.ic_edit,
@@ -173,7 +171,6 @@ img.ic-book {
 }
 .create-button {
   font-weight: $weight-medium;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+  @extend .button-with-shadow;
 }
 </style>
